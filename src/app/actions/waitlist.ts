@@ -35,12 +35,16 @@ export async function joinWaitlist(
 }
 
 export async function getWaitlistCount(): Promise<number> {
-  const supabase = await createClient();
-  const { data, error } = await supabase.rpc("waitlist_count");
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase.rpc("waitlist_count");
 
-  if (error || data == null) {
+    if (error || data == null) {
+      return 14204;
+    }
+
+    return Number(data);
+  } catch {
     return 14204;
   }
-
-  return Number(data);
 }

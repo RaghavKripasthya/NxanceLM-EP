@@ -1,7 +1,8 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 import { joinWaitlist, type WaitlistState } from "@/app/actions/waitlist";
+import { useWaitlistStatus } from "@/components/waitlist-status";
 
 const initialState: WaitlistState = { status: "idle" };
 
@@ -10,6 +11,7 @@ type WaitlistFormProps = {
 };
 
 export function WaitlistForm({ variant = "header" }: WaitlistFormProps) {
+  const { joined, markJoined } = useWaitlistStatus();
   const [state, formAction, pending] = useActionState(
     joinWaitlist,
     initialState,
@@ -18,7 +20,13 @@ export function WaitlistForm({ variant = "header" }: WaitlistFormProps) {
   const emailId =
     variant === "cta" ? "waitlist-email-cta" : "waitlist-email";
 
-  if (state.status === "success") {
+  useEffect(() => {
+    if (state.status === "success") {
+      markJoined();
+    }
+  }, [state.status, markJoined]);
+
+  if (joined) {
     return (
       <p
         className={`font-medium text-[#2F6EFF] ${
