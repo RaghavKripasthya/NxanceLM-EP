@@ -1,69 +1,86 @@
 import Image from "next/image";
+import { WaitlistForm } from "@/components/waitlist-form";
+import { PortfolioPreview } from "@/components/portfolio-preview";
+import { LaunchStatusBar } from "@/components/launch-status-bar";
+import { FeaturesGrid } from "@/components/features-grid";
+import { HealthCheckFeature } from "@/components/health-check-feature";
+import { PortfolioConstructionFeature } from "@/components/portfolio-construction-feature";
+import { NxanceLmFeature } from "@/components/nxance-lm-feature";
+import { NxanceLmTerminal } from "@/components/nxance-lm-terminal";
+import { CoreMathStrategyFlow } from "@/components/core-math-strategy-flow";
+import { QuantifiableOptimization } from "@/components/quantifiable-optimization";
+import { LandingClosing } from "@/components/landing-closing";
+import { getWaitlistCount } from "@/app/actions/waitlist";
 
-export default function Home() {
+function RisingLine({
+  children,
+  delayMs,
+  className,
+}: {
+  children: React.ReactNode;
+  delayMs: number;
+  className?: string;
+}) {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
+    <span className={`rise-line ${className ?? ""}`}>
+      <span style={{ animationDelay: `${delayMs}ms` }}>{children}</span>
+    </span>
+  );
+}
+
+export default async function Home() {
+  const waitlistCount = await getWaitlistCount();
+
+  return (
+    <div className="flex min-h-dvh flex-col bg-white">
+      <header className="flex shrink-0 flex-col gap-4 px-6 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-10 lg:px-14 xl:px-16">
         <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
+          src="/logo.svg"
+          alt="Nxance by Ohshn Intelligence"
+          width={830}
+          height={375}
           priority
+          className="h-auto w-[170px] sm:w-[185px] lg:w-[200px]"
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
+        <WaitlistForm />
+      </header>
+
+      <main className="grid items-start gap-10 px-6 py-8 sm:px-10 lg:min-h-[calc(100dvh-72px)] lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-center lg:gap-14 lg:px-14 lg:py-0 xl:px-16">
+        <section className="flex w-full flex-col items-start justify-center py-4 text-left lg:max-w-[640px] lg:py-0">
+          <h1 className="w-full text-[44px] leading-[1.08] font-semibold tracking-[-0.03em] text-[#111111] sm:text-[50px] lg:text-[56px] xl:text-[58px]">
+            <RisingLine delayMs={160} className="lg:whitespace-nowrap">
+              AI-powered investment
+            </RisingLine>
+            <RisingLine delayMs={480}>intelligence.</RisingLine>
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="mt-5 w-full text-[20px] leading-[1.45] font-semibold text-[#6B7280] sm:mt-6 sm:text-[21px] lg:whitespace-nowrap lg:text-[22px]">
+            <RisingLine delayMs={820}>
+              See the true health of every asset you hold.
+            </RisingLine>
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+          <p className="mt-6 w-full text-[11px] font-semibold tracking-[0.12em] text-[#2F6EFF] uppercase sm:mt-7 lg:mt-8">
+            <RisingLine delayMs={1180}>
+              Backed by research-driven, proprietary models.
+            </RisingLine>
+          </p>
+        </section>
+
+        <div className="rise-panel flex items-center justify-center lg:h-full">
+          <PortfolioPreview />
         </div>
       </main>
+
+      <section className="relative z-10 px-6 sm:px-10 lg:px-14 xl:px-16">
+        <LaunchStatusBar waitlistCount={waitlistCount} />
+        <FeaturesGrid />
+        <HealthCheckFeature />
+        <PortfolioConstructionFeature />
+        <NxanceLmFeature />
+        <NxanceLmTerminal />
+        <CoreMathStrategyFlow />
+        <QuantifiableOptimization />
+        <LandingClosing />
+      </section>
     </div>
   );
 }
