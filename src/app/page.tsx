@@ -55,9 +55,10 @@ export default async function Home() {
               </RisingLine>
               <RisingLine delayMs={480}>intelligence.</RisingLine>
             </h1>
-            <p className="mt-5 w-full text-[20px] leading-[1.45] font-semibold text-[#6B7280] sm:mt-6 sm:text-[21px] lg:whitespace-nowrap lg:text-[22px]">
+            <p className="mt-5 w-full text-[20px] leading-[1.45] font-semibold text-[#6B7280] sm:mt-6 sm:text-[21px] lg:text-[22px]">
               <RisingLine delayMs={820}>
-                See the true health of every asset you hold.
+                See the true health of every asset you hold — or build a new one
+                from scratch.
               </RisingLine>
             </p>
             <p className="mt-6 w-full text-[11px] font-semibold tracking-[0.12em] text-[#2F6EFF] uppercase sm:mt-7 lg:mt-8">

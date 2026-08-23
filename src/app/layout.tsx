@@ -17,7 +17,7 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Nxance — Early Access",
   description:
-    "AI-powered investment intelligence. See the true health of every asset you hold.",
+    "AI-powered investment intelligence. See the true health of every asset you hold — or build a new one from scratch.",
   icons: {
     icon: [
       { url: "/favicon.png", sizes: "32x32", type: "image/png" },

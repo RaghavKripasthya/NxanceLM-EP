@@ -3,17 +3,30 @@
 import { useEffect, useState } from "react";
 
 const LAUNCH_DATE = new Date("2026-12-15T00:00:00+05:30");
+/** Program live since deploy — set to the real go-live moment. */
+const PROGRAM_START_DATE = new Date("2026-08-22T00:00:00+05:30");
 const BUILD_PROGRESS = 50;
 
-type TimeLeft = {
+type TimeParts = {
   days: number;
   hours: number;
   minutes: number;
   seconds: number;
 };
 
-function getTimeLeft(target: Date): TimeLeft {
+function getTimeLeft(target: Date): TimeParts {
   const diff = Math.max(0, target.getTime() - Date.now());
+
+  return {
+    days: Math.floor(diff / (1000 * 60 * 60 * 24)),
+    hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
+    minutes: Math.floor((diff / (1000 * 60)) % 60),
+    seconds: Math.floor((diff / 1000) % 60),
+  };
+}
+
+function getTimeElapsed(since: Date): TimeParts {
+  const diff = Math.max(0, Date.now() - since.getTime());
 
   return {
     days: Math.floor(diff / (1000 * 60 * 60 * 24)),
@@ -31,16 +44,24 @@ function CountdownUnit({
   value,
   label,
   padValue = true,
+  tone = "dark",
 }: {
   value: number;
   label: string;
   padValue?: boolean;
+  tone?: "dark" | "blue";
 }) {
   const display = padValue ? pad(value) : String(value);
+  const valueClass =
+    tone === "blue"
+      ? "text-[#2F6EFF]"
+      : "text-[#111111]";
 
   return (
     <div className="flex min-w-0 flex-1 flex-col items-center gap-1 sm:flex-none sm:flex-row sm:items-baseline sm:gap-1.5">
-      <span className="text-[28px] leading-none font-bold tracking-tight text-[#111111] tabular-nums sm:text-[38px] lg:text-[42px]">
+      <span
+        className={`text-[28px] leading-none font-bold tracking-tight tabular-nums sm:text-[38px] lg:text-[42px] ${valueClass}`}
+      >
         {display}
       </span>
       <span className="text-[11px] font-medium tracking-[0.08em] text-[#B0B4BA] uppercase">
@@ -51,10 +72,14 @@ function CountdownUnit({
 }
 
 export function LaunchStatusBar({ waitlistCount }: { waitlistCount: number }) {
-  const [timeLeft, setTimeLeft] = useState<TimeLeft | null>(null);
+  const [timeLeft, setTimeLeft] = useState<TimeParts | null>(null);
+  const [programAge, setProgramAge] = useState<TimeParts | null>(null);
 
   useEffect(() => {
-    const tick = () => setTimeLeft(getTimeLeft(LAUNCH_DATE));
+    const tick = () => {
+      setTimeLeft(getTimeLeft(LAUNCH_DATE));
+      setProgramAge(getTimeElapsed(PROGRAM_START_DATE));
+    };
     tick();
     const timer = window.setInterval(tick, 1000);
 
@@ -68,12 +93,19 @@ export function LaunchStatusBar({ waitlistCount }: { waitlistCount: number }) {
     seconds: 0,
   };
 
+  const age = programAge ?? {
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  };
+
   const formattedCount = waitlistCount.toLocaleString("en-US");
 
   return (
     <div className="rounded-2xl border border-[#E8E8EA] bg-white px-5 py-6 sm:px-8 sm:py-8 lg:px-10">
       <div className="flex flex-col gap-7 lg:flex-row lg:items-center lg:justify-between lg:gap-10">
-        {/* 1. Launch countdown — always first */}
+        {/* 1. Launch countdown + program age */}
         <div className="w-full shrink-0 lg:w-auto">
           <p className="text-[11px] font-semibold tracking-[0.12em] text-[#2F6EFF] uppercase">
             Launch Window
@@ -83,6 +115,21 @@ export function LaunchStatusBar({ waitlistCount }: { waitlistCount: number }) {
             <CountdownUnit value={countdown.hours} label="H" />
             <CountdownUnit value={countdown.minutes} label="M" />
             <CountdownUnit value={countdown.seconds} label="S" />
+          </div>
+
+          <p className="mt-6 text-[11px] font-semibold tracking-[0.12em] text-[#2F6EFF] uppercase">
+            Age of the Program
+          </p>
+          <div className="mt-3 flex w-full items-end justify-between gap-2 sm:w-auto sm:items-baseline sm:justify-start sm:gap-5">
+            <CountdownUnit
+              value={age.days}
+              label="D"
+              padValue={false}
+              tone="blue"
+            />
+            <CountdownUnit value={age.hours} label="H" tone="blue" />
+            <CountdownUnit value={age.minutes} label="M" tone="blue" />
+            <CountdownUnit value={age.seconds} label="S" tone="blue" />
           </div>
         </div>
 

@@ -34,17 +34,19 @@ export async function joinWaitlist(
   return { status: "success" };
 }
 
+const WAITLIST_DISPLAY_OFFSET = 500;
+
 export async function getWaitlistCount(): Promise<number> {
   try {
     const supabase = await createClient();
     const { data, error } = await supabase.rpc("waitlist_count");
 
     if (error || data == null) {
-      return 14204;
+      return WAITLIST_DISPLAY_OFFSET;
     }
 
-    return Number(data);
+    return WAITLIST_DISPLAY_OFFSET + Number(data);
   } catch {
-    return 14204;
+    return WAITLIST_DISPLAY_OFFSET;
   }
 }
