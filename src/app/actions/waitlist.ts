@@ -18,7 +18,7 @@ export async function joinWaitlist(
     .toLowerCase();
 
   if (!EMAIL_PATTERN.test(email) || email.length > 320) {
-    return { status: "error", message: "Enter a valid work email." };
+    return { status: "error", message: "Enter a valid email." };
   }
 
   const supabase = await createClient();

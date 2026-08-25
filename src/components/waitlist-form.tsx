@@ -46,7 +46,7 @@ export function WaitlistForm({ variant = "header" }: WaitlistFormProps) {
           className="flex w-full flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-center"
         >
           <label className="sr-only" htmlFor={emailId}>
-            Work email
+            Email
           </label>
           <input
             id={emailId}
@@ -55,7 +55,7 @@ export function WaitlistForm({ variant = "header" }: WaitlistFormProps) {
             autoComplete="email"
             required
             maxLength={320}
-            placeholder="Enter work email"
+            placeholder="Enter email"
             disabled={pending}
             aria-invalid={state.status === "error"}
             aria-describedby={
@@ -91,7 +91,7 @@ export function WaitlistForm({ variant = "header" }: WaitlistFormProps) {
         className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center"
       >
         <label className="sr-only" htmlFor={emailId}>
-          Work email
+          Email
         </label>
         <input
           id={emailId}
@@ -100,7 +100,7 @@ export function WaitlistForm({ variant = "header" }: WaitlistFormProps) {
           autoComplete="email"
           required
           maxLength={320}
-          placeholder="Enter work email"
+          placeholder="Enter email"
           disabled={pending}
           aria-invalid={state.status === "error"}
           aria-describedby={state.status === "error" ? "waitlist-error" : undefined}
