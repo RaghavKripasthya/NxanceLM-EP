@@ -30,7 +30,10 @@ export function LandingClosing() {
           className="mx-auto w-[190px] h-auto sm:w-[230px]"
         />
         <p className="mt-4 text-[15px] text-[#6B7280] sm:text-[16px]">
-          Currently building. Follow along.
+           © 2026 Ohshn Intelligence LLP. <br/>
+        Nxance is a product of Ohshn Intelligence LLP. LLPIN: ACZ-7676<br />
+        Contact:projectmanagement@nxance.com<br />
+Nxance provides analytical information and tools. It is not investment advice. Investments in securities are subject to market risks.
         </p>
       </footer>
     </>
